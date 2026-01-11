@@ -16,6 +16,13 @@ const closeModalBtn = document.getElementById("closeModal");
 const ticketTitle = document.getElementById("ticketTitle");
 const ticketDate = document.getElementById("ticketDate");
 
+const formNote = document.getElementById("formNote");
+const addTaskButton = document.getElementById("add-note-button");
+const saveTaskbutton = document.getElementById("savenote");
+const closenote = document.getElementById("closenote");
+
+const taskTitle = document.getElementById("noteTitle");
+
 const toggle = document.getElementById("themeToggle");
 
 //------------------------------------------------------
@@ -92,11 +99,9 @@ function renderCalendar() {
   const tickets = loadTickets();
   let liTag = "";
 
-  // Jours du mois précédent
   for (let i = firstDay; i > 0; i--)
     liTag += `<li class="inactive">${prevLastDate - i + 1}</li>`;
 
-  // --- jours du mois courant
   for (let i = 1; i <= lastDate; i++) {
     const fullDate = `${currYear}-${String(currMonth + 1).padStart(
       2,
@@ -124,7 +129,6 @@ function renderCalendar() {
     liTag += `<li class="${todayClass} ${colorClass}" data-date="${fullDate}">${i}</li>`;
   }
 
-  // Jours du prochain mois
   for (let i = lastDay; i < 6; i++)
     liTag += `<li class="inactive">${i - lastDay + 1}</li>`;
 
@@ -132,7 +136,6 @@ function renderCalendar() {
   dates.innerText = `${mois[currMonth]} ${currYear}`;
   jours.innerHTML = liTag;
 
-  // On ajoute l’event pour chaque jour
   jours.querySelectorAll("li").forEach((li) => {
     if (!li.classList.contains("inactive"))
       li.onclick = () => showTickets(li.dataset.date);
@@ -148,7 +151,7 @@ function showTickets(dateStr) {
   const tickets = loadTickets().filter((t) => t.date === dateStr);
 
   if (tickets.length === 0) {
-    ticketList.innerHTML = "<li>Aucun ticket</li>";
+    ticketList.innerHTML = "<li>Aucun évènement</li>";
     return;
   }
 
@@ -230,6 +233,113 @@ saveTicketBtn.onclick = () => {
 closeModalBtn.onclick = () => (ticketModal.style.display = "none");
 
 //------------------------------------------------------
+//   LOCAL STORAGE TASKS
+//------------------------------------------------------
+function loadTasks() {
+  return JSON.parse(localStorage.getItem("tasks")) || [];
+}
+
+function saveTasks(tasks) {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+//------------------------------------------------------
+//   AFFICHAGE DES TÂCHES
+//------------------------------------------------------
+function renderTasks() {
+  const taskList = document.querySelector(".taches");
+  taskList.innerHTML = "";
+
+  const tasks = loadTasks();
+
+  if (tasks.length === 0) {
+    taskList.innerHTML = "<li>Aucune tâche</li>";
+    return;
+  }
+
+  tasks.forEach((task) => {
+    const li = document.createElement("li");
+    li.style.display = "flex";
+    li.style.alignItems = "center";
+    li.style.justifyContent = "space-between";
+    li.style.marginBottom = "8px";
+
+    li.innerHTML = `
+      <label style="display:flex; align-items:center; gap:8px;">
+        <input type="checkbox" ${task.done ? "checked" : ""}>
+        <span style="
+          text-decoration:${task.done ? "line-through" : "none"};
+          opacity:${task.done ? "0.6" : "1"};
+        ">
+          ${task.title}
+        </span>
+      </label>
+      <div>
+        <button class="editTask">✏️</button>
+        <button class="deleteTask">🗑️</button>
+      </div>
+    `;
+
+    li.querySelector("input").onchange = () => {
+      task.done = !task.done;
+      saveTasks(tasks);
+      renderTasks();
+    };
+
+    li.querySelector(".editTask").onclick = () => {
+      taskTitle.value = task.title;
+      formNote.style.display = "flex";
+      saveTaskbutton.onclick = () => {
+        task.title = taskTitle.value;
+        saveTasks(tasks);
+        formNote.style.display = "none";
+        renderTasks();
+      };
+    };
+
+    li.querySelector(".deleteTask").onclick = () => {
+      const updated = tasks.filter((t) => t.id !== task.id);
+      saveTasks(updated);
+      renderTasks();
+    };
+
+    taskList.appendChild(li);
+  });
+}
+
+//------------------------------------------------------
+//   AJOUT D'UNE TÂCHE
+//------------------------------------------------------
+addTaskButton.onclick = () => {
+  taskTitle.value = "";
+  formNote.style.display = "flex";
+
+  saveTaskbutton.onclick = () => {
+    if (!taskTitle.value.trim()) return;
+
+    const tasks = loadTasks();
+    tasks.push({
+      id: Date.now(),
+      title: taskTitle.value,
+      done: false,
+    });
+
+    saveTasks(tasks);
+    formNote.style.display = "none";
+    renderTasks();
+  };
+};
+
+closenote.onclick = () => {
+  formNote.style.display = "none";
+};
+
+//------------------------------------------------------
+//   INITIALISATION
+//------------------------------------------------------
+renderTasks();
+
+//------------------------------------------------------
 //   NAVIGATION MOIS
 //------------------------------------------------------
 icons.forEach((icon) => {
@@ -261,17 +371,5 @@ toggle.addEventListener("change", () => {
   const isDark = document.body.classList.toggle("dark");
   localStorage.setItem("theme", isDark ? "dark" : "light");
 });
-
-//------------------------------------------------------
-//   API METEO → PARIS
-//------------------------------------------------------
-//fetch("https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&daily=weathercode,temperature_2m_max&timezone=Europe%2FParis")
-//.then(res => res.json())
-//.then(data => {
-//meteoDaily = data.daily;
-//renderCalendar(); // On affiche seulement APRES avoir la météo
-//showTickets(new Date().toISOString().slice(0,10));
-//});
-// --- Initialisation SANS météo ---
 renderCalendar();
 showTickets(new Date().toISOString().slice(0, 10));

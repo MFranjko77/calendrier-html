@@ -46,6 +46,7 @@ header{
 
 
 #add-note-button{
+    color: var(--blanc);
     border-radius: 8px;
     background-color: var(--noir);
     padding: 12px 20px;
@@ -56,6 +57,7 @@ header{
 }
 
 #add-Ticket-Btn{
+    color: var(--blanc);
     border-radius: 8px;
     background-color: var(--noir);
     padding: 12px 20px;
@@ -141,6 +143,11 @@ main{
     width: 350px;
     padding: 15px;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.taches{
+    list-style: None;
+    padding-left: 0;
 }
 
 /* calendrier de .wrapper 
@@ -297,6 +304,10 @@ header .date {
     gap: 10px;
 }
 
+#ticketTitle , #ticketDate {
+    color: var(--noir);
+}
+
 button{
     color: rgb(0, 0, 0);
     border-radius: 5px;
@@ -322,4 +333,8 @@ button{
     border-radius: 8px;
     width: 350px;
     gap: 10px;
+ }
+
+ #noteTitle{
+    color: var(--noir);
  }
