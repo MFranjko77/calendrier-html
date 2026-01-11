@@ -1,12 +1,11 @@
 *{
     font-family: Arial, Helvetica, sans-serif;
     padding: 0;
-    margin: 3px;
+    margin: 0;
     color: var(--blanc);
 }
 body,html{
     height: 100%;
-    overflow: hidden;
 }
 :root{
     --navyblue : #28323d ;
@@ -24,6 +23,8 @@ body {
     gap: 10px;
     flex-direction: column;
     background-color: var(--blanc);
+    padding: 10px;
+    box-sizing: border-box;
 }
 
  /* mode sombre à injecter avec js */
@@ -41,7 +42,7 @@ header{
     display: flex;
     flex-direction : row;
     justify-content: space-between;
-    
+    gap: 3px;
 }
 
 
@@ -105,8 +106,8 @@ de .switch
 .slider:before {
   content: "";
   position: absolute;
-  height: 20px;
-  width: 20px;
+  height: 26px;
+  width: 26px;
   left: 1px;
   background-color: white;
   border-radius: 50%;
@@ -130,72 +131,93 @@ dans le main nous pouvons retrouver un système de
 
 main{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 /* Ajout d'un système de tâches */
+.panneau-tâches , .wrapper , .ticket-panel {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+}
 
 .panneau-tâches{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     background-color: var(--noir);
     border-radius: 8px;
+    border: 2px solid var(--blanc);
     right: 20px;
     top: 50px;
-    width: 350px;
     padding: 15px;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.panneau-tâches h2 {
+    margin-bottom: 10px;
 }
 
 .taches{
     list-style: None;
     padding-left: 0;
+    margin-top: 10px;
 }
 
 /* calendrier de .wrapper 
 à .jours li:not(.active):hover::before
 */
 .wrapper{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     background-color: var(--noir);
-    width: 450px;
     border-radius: 8px;
+    border: 2px solid var(--blanc);
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
 .wrapper header {
     display: flex;
-    padding: 25px 30px 10px;
+    padding: 15px 10px 5px;
     align-items: center;
+    justify-content: space-between;
 }
 
 header .icons {
     display: flex;
+    gap: 5px;
 }
 
 header .icons span {
-    height: 38px;
-    width: 38px;
-    margin: 0 3px;
+    height: 32px;
+    width: 32px;
     cursor: pointer;
-    color: #777;
+    color: var(--blanc);
     text-align: center;
-    line-height: 38px;
-    font-size: 1.7rem;
+    line-height: 32px;
+    font-size: 1.4rem;
     user-select: none;
     border-radius: 50%;
     transition: background 0.2s;
 }
 
 header .icons span:hover {
-    background: #eee;
+    background: #555;
 }
 
 header .date {
     font-weight: 600;
-    font-size: 1.45rem;
-    color: var(--noir);
+    font-size: 1.2rem;
+    color: var(--blanc);
 }
 
 .calendrier {
-    padding: 20px;
+    padding: 10px;
+    padding-bottom: 20px;
+    overflow-x: auto;
 }
 
 .calendrier ul{
@@ -203,35 +225,47 @@ header .date {
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
+    padding: 0;
     text-align: center;
+    min-width: 100%;
+}
+
+.calendrier .semaines {
+    margin-bottom: 5px;
+    width: 100%;
 }
 
 .calendrier .jours {
-    margin-bottom: 15px;
+    width: 100%;
 }
 
 .calendrier li {
     width: calc(100% / 7);
     color: var(--blanc);
-    font-size: 1.05rem;
+    font-size: 0.9rem;
     margin: 0;
+    padding: 0 2px;
+    box-sizing: border-box;
 }
 
 .calendrier .semaines li {
     font-weight: 600;
     color: var(--blanc);
+    padding: 8px 2px;
+    font-size: 0.85rem;
 }
 
 .calendrier .jours li {
+    margin-top: 8px;
     position: relative;
     cursor: pointer;
-    margin-top: 25px;
     z-index: 1;
     transition: color 0.2s;
+    padding: 6px 2px;
 }
 
 .jours li.inactive {
-    color: #ccc;
+    color: #999;
 }
 
 .jours li.active {
@@ -245,12 +279,11 @@ header .date {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
     z-index: -1;
     transition: background 0.2s;
-    background: var(#1E90FF, transparent);
 }
 
 .jours li.active::before {
@@ -267,13 +300,20 @@ header .date {
 
 /* panneau d'indication des évènements */
 .ticket-panel{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     background-color: var(--noir);
     border-radius: 8px;
+    border: 2px solid var(--blanc);
     right: 20px;
     top: 50px;
-    width: 350px;
     padding: 15px;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.ticket-panel h2 {
+    margin-bottom: 10px;
 }
 
 .ticket-panel ul {
@@ -283,15 +323,16 @@ header .date {
 }
 
 .ticket-modal{
+    align-items: center;
     display: none;
     position: fixed;
     z-index: 1;
     left: 0; top: 0;
-    width: 100%; height: 100%;
+    width: 100%;height: 100%;
     background: rgba(0,0,0,0.5);
     align-items: flex-start;
     justify-content: center;
-    padding: 50px;
+    padding: 20px;
 }
 
 .ticket-modal-content{
@@ -300,7 +341,6 @@ header .date {
     padding: 20px;
     background-color: var(--noir);
     border-radius: 8px;
-    width: 350px;
     gap: 10px;
 }
 
@@ -309,6 +349,8 @@ header .date {
 }
 
 button{
+    min-height: 48px;
+    font-size: 1rem;
     color: rgb(0, 0, 0);
     border-radius: 5px;
 }
@@ -320,9 +362,9 @@ button{
     width: 100%; height: 100%;
     background: rgba(0,0,0,0.5);
     display: none;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding: 50px;
+    padding: 20px;
  }
 
  .form-note-content{
@@ -337,4 +379,101 @@ button{
 
  #noteTitle{
     color: var(--noir);
+ }
+ footer{
+    margin-top: 150px;
+ }
+
+ /* MEDIA QUERIES - TABLETTE (768px à 1024px) */
+ @media (min-width : 768px) and (max-width : 1024px){
+    main{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 10px;
+        min-height: 80vh;
+    }
+
+    .panneau-tâches{
+        grid-column: 1 / 3;
+        grid-row: 1;
+        min-height: 200px;
+    }
+
+    .wrapper{
+        grid-column: 1;
+        grid-row: 2;
+        min-height: 500px;
+    }
+
+    .ticket-panel{
+        grid-column: 2;
+        grid-row: 2;
+        min-height: 500px;
+    }
+ }
+
+ /* MEDIA QUERIES - PC (1024px et plus) */
+ @media (min-width : 1024px){
+    main{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 10px;
+        min-height: 70vh;
+    }
+
+    .panneau-tâches{
+        grid-column: 1;
+        grid-row: 1;
+        min-height: 450px;
+    }
+
+    .wrapper{
+        grid-column: 2;
+        grid-row: 1;
+        min-height: 450px;
+    }
+
+    .ticket-panel{
+        grid-column: 3;
+        grid-row: 1;
+        min-height: 450px;
+    }
+
+    header{
+        gap: 8px;
+        padding: 12px 0;
+    }
+
+    #add-note-button, #add-Ticket-Btn{
+        padding: 12px 18px;
+        font-size: 0.95rem;
+    }
+
+    .mode-sombre{
+        padding: 12px 18px;
+    }
+
+    .wrapper header {
+        padding: 12px 8px 5px;
+    }
+
+    header .date {
+        font-size: 1.1rem;
+    }
+
+    .calendrier {
+        padding: 8px;
+        padding-bottom: 15px;
+    }
+
+    .calendrier li {
+        font-size: 0.85rem;
+    }
+
+    .calendrier .semaines li {
+        font-size: 0.8rem;
+        padding: 6px 2px;
+    }
  }
