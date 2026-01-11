@@ -28,7 +28,7 @@ body {
 
  /* mode sombre à injecter avec js */
 .dark{
-    background-color: var(--noir);
+    background-color: var(--navyblue);
 }
 
 /*
@@ -121,15 +121,26 @@ input:checked + .slider:before {
 
 /*
 dans le main nous pouvons retrouver un système de 
-- le calendrier au milieu 
-- les évènements à droite 
+-les évènements à droite   
+- le calendrier au milieu
 - les tâches à gauche
 */
 
 main{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+}
+
+/* Ajout d'un système de tâches */
+
+.panneau-tâches{
+    background-color: var(--noir);
+    border-radius: 8px;
+    right: 20px;
+    top: 50px;
+    width: 350px;
+    padding: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
 /* calendrier de .wrapper 
@@ -287,6 +298,28 @@ header .date {
 }
 
 button{
-    color: var(--blanc);
+    color: rgb(0, 0, 0);
     border-radius: 5px;
 }
+
+ .form-note{
+    position: fixed;
+    z-index: 1;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 50px;
+ }
+
+ .form-note-content{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--noir);
+    border-radius: 8px;
+    width: 350px;
+    gap: 10px;
+ }

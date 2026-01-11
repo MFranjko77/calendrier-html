@@ -23,6 +23,10 @@
     </header>
     <hr>
     <main>
+        <div class="panneau-tâches">
+            <h2>Tâches :</h2>
+            <ul class="taches"></ul>
+        </div>
         <div class="wrapper">
             <header>
                 <p class="date"></p>
@@ -53,13 +57,23 @@
 
         <div class="ticket-modal" id="ticketModal">
             <div class="ticket-modal-content">
-                <h3>Ajouter / Modifier une tâche</h3>
+                <h3>Ajouter / Modifier un évènement</h3>
                 <label>Titre :</label>
                 <input type="text" id="ticketTitle">
                 <label>Date :</label>
                 <input type="date" id="ticketDate">
                 <button id="saveTicket">Enregistrer</button>
                 <button id="closeModal">Annuler</button>
+            </div>
+        </div>
+
+        <div class="form-note" id="form-note">
+            <div class="form-note-content">
+                <h3>Ajouter / Modifier une tâche</h3>
+                <label >Titre :</label>
+                <input type="text" id="noteTitle">
+                <button id="savenote">Enregistrer</button>
+                <button id="closenote">Annuler</button>
             </div>
         </div>
 
