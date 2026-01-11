@@ -1,0 +1,292 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 3px;
+    color: var(--blanc);
+}
+body,html{
+    height: 100%;
+    overflow: hidden;
+}
+:root{
+    --navyblue : #28323d ;
+    --blanc : #ffffff;
+    --noir: #333;
+
+    --vert : #5CB85C;
+    --orange-ticket : #F0AD4E;
+    --rouge : #D9534F ;
+
+}
+
+body {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    background-color: var(--blanc);
+}
+
+ /* mode sombre à injecter avec js */
+.dark{
+    background-color: var(--noir);
+}
+
+/*
+        entête contenant
+- un bouton pour ajouter les tâches (#add-note-button)
+- un bouton pour ajouter les évènements au calendrier (#add-ticket-Btn)
+- un bouton pour activer le mode sombre ou le mode clair
+*/
+header{
+    display: flex;
+    flex-direction : row;
+    justify-content: space-between;
+    
+}
+
+
+#add-note-button{
+    border-radius: 8px;
+    background-color: var(--noir);
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+#add-Ticket-Btn{
+    border-radius: 8px;
+    background-color: var(--noir);
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.mode-sombre{
+    border-radius: 8px;
+    background-color: var(--noir);
+    padding: 12px 20px;
+    border: none;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+/* 
+tout ce qui suit est relatif au bon fonctionnement du bouton mode sombre 
+de .switch 
+à input:checked + .slider:before
+*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  border-radius: 30px;
+  transition: .3s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 1px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .3s;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50; 
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/*
+dans le main nous pouvons retrouver un système de 
+- le calendrier au milieu 
+- les évènements à droite 
+- les tâches à gauche
+*/
+
+main{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* calendrier de .wrapper 
+à .jours li:not(.active):hover::before
+*/
+.wrapper{
+    background-color: var(--noir);
+    width: 450px;
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.wrapper header {
+    display: flex;
+    padding: 25px 30px 10px;
+    align-items: center;
+}
+
+header .icons {
+    display: flex;
+}
+
+header .icons span {
+    height: 38px;
+    width: 38px;
+    margin: 0 3px;
+    cursor: pointer;
+    color: #777;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.7rem;
+    user-select: none;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+header .icons span:hover {
+    background: #eee;
+}
+
+header .date {
+    font-weight: 600;
+    font-size: 1.45rem;
+    color: var(--noir);
+}
+
+.calendrier {
+    padding: 20px;
+}
+
+.calendrier ul{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    text-align: center;
+}
+
+.calendrier .jours {
+    margin-bottom: 15px;
+}
+
+.calendrier li {
+    width: calc(100% / 7);
+    color: var(--blanc);
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.calendrier .semaines li {
+    font-weight: 600;
+    color: var(--blanc);
+}
+
+.calendrier .jours li {
+    position: relative;
+    cursor: pointer;
+    margin-top: 25px;
+    z-index: 1;
+    transition: color 0.2s;
+}
+
+.jours li.inactive {
+    color: #ccc;
+}
+
+.jours li.active {
+    color: var(--blanc);
+    font-weight: bold;
+}
+
+.jours li::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    z-index: -1;
+    transition: background 0.2s;
+    background: var(#1E90FF, transparent);
+}
+
+.jours li.active::before {
+    background: gray;
+}
+
+.jours li:not(.active):hover::before {
+    background: lightgray;
+}
+
+.rouge::before { background: var(--rouge) !important; }
+.orange::before { background: var(--orange-ticket) !important; }
+.vert::before { background: var(--vert) !important; }
+
+/* panneau d'indication des évènements */
+.ticket-panel{
+    background-color: var(--noir);
+    border-radius: 8px;
+    right: 20px;
+    top: 50px;
+    width: 350px;
+    padding: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.ticket-panel ul {
+    margin-top: 10px;
+    padding-left: 15px;
+    list-style: none;
+}
+
+.ticket-modal{
+    position: fixed;
+    z-index: 1;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 50px;
+}
+
+.ticket-modal-content{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--noir);
+    border-radius: 8px;
+    width: 350px;
+    gap: 10px;
+}
+
+button{
+    color: var(--blanc);
+    border-radius: 5px;
+}

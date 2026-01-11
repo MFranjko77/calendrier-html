@@ -1,0 +1,9 @@
+Objectif : 
+
+- faire un schéma du final du calendrier 
+- mettre un système de note
+- pouvoir mettre des types de note / tasks : urgent ; important 
+- mode claire et sombre : modifier le mode clair
+- dans les taches rajouter du fais ou non fais et barrer le non fais
+- faire en sorte de l'ouvrir sur serveur
+
