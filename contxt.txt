@@ -1,4 +1,0 @@
-Objectif : 
-
-- pouvoir mettre des types de note / tasks : urgent ; important 
-- faire en sorte de l'ouvrir sur serveur
