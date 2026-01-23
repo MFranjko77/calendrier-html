@@ -45,36 +45,28 @@ header{
     gap: 3px;
 }
 
-
-#add-note-button{
-    color: var(--blanc);
+#add-note-button,#add-Ticket-Btn,.mode-sombre{
     border-radius: 8px;
     background-color: var(--noir);
     padding: 12px 20px;
     border: none;
-    cursor: pointer;
-    font-size: 1rem;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
-#add-Ticket-Btn{
+#add-note-button,#add-Ticket-Btn{
     color: var(--blanc);
-    border-radius: 8px;
-    background-color: var(--noir);
-    padding: 12px 20px;
-    border: none;
     cursor: pointer;
     font-size: 1rem;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .mode-sombre{
-    border-radius: 8px;
-    background-color: var(--noir);
-    padding: 12px 20px;
-    border: none;
     text-align: center;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+#add-note-button:hover ,#add-Ticket-Btn:hover {
+    transform: translateY(-6px) ;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 /* 
 tout ce qui suit est relatif au bon fonctionnement du bouton mode sombre 
