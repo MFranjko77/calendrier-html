@@ -68,6 +68,7 @@ header{
     transform: translateY(-6px) ;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
+
 /* 
 tout ce qui suit est relatif au bon fonctionnement du bouton mode sombre 
 de .switch 
@@ -157,6 +158,10 @@ main{
     padding-left: 0;
     margin-top: 10px;
 }
+
+.panneau-tâches>.checkbox{
+    border-radius: 50%;
+} 
 
 /* calendrier de .wrapper 
 à .jours li:not(.active):hover::before

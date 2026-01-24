@@ -1,6 +1,5 @@
-//------------------------------------------------------
-//    VARIABLES DOM
-//------------------------------------------------------
+//    VARIABLES
+
 const jours = document.querySelector(".jours");
 const dates = document.querySelector(".date");
 const icons = document.querySelectorAll(".icons span");
@@ -25,9 +24,8 @@ const taskTitle = document.getElementById("noteTitle");
 
 const toggle = document.getElementById("themeToggle");
 
-//------------------------------------------------------
-//    DONNÉES
-//------------------------------------------------------
+//    DONNÉES POUR LE CALENDRIER
+
 let date = new Date();
 let currYear = date.getFullYear();
 let currMonth = date.getMonth();
@@ -47,9 +45,8 @@ const mois = [
   "Decembre",
 ];
 
-//------------------------------------------------------
 //   LOCAL STORAGE
-//------------------------------------------------------
+
 function loadTickets() {
   return JSON.parse(localStorage.getItem("tickets")) || [];
 }
@@ -57,9 +54,8 @@ function saveTickets(tickets) {
   localStorage.setItem("tickets", JSON.stringify(tickets));
 }
 
-//------------------------------------------------------
 //   UTILITAIRE COULEUR
-//------------------------------------------------------
+
 function hexToRgb(hex) {
   hex = hex.replace("#", "");
   return {
@@ -78,18 +74,8 @@ function interpolateColor(from, to, t) {
   return `rgb(${r},${g},${b})`;
 }
 
-function tempToColor(temp) {
-  if (temp <= 10) return interpolateColor("#00aaff", "#0044aa", temp / 10);
-
-  if (temp <= 20)
-    return interpolateColor("#ff8800", "#ff0000", (temp - 10) / 10);
-
-  return "#ff0000";
-}
-
-//------------------------------------------------------
 //   AFFICHAGE CALENDRIER
-//------------------------------------------------------
+
 function renderCalendar() {
   let firstDay = new Date(currYear, currMonth, 1).getDay();
   let lastDate = new Date(currYear, currMonth + 1, 0).getDate();
@@ -105,7 +91,7 @@ function renderCalendar() {
   for (let i = 1; i <= lastDate; i++) {
     const fullDate = `${currYear}-${String(currMonth + 1).padStart(
       2,
-      "0"
+      "0",
     )}-${String(i).padStart(2, "0")}`;
     const dayTickets = tickets.filter((t) => t.date === fullDate);
 
@@ -142,9 +128,8 @@ function renderCalendar() {
   });
 }
 
-//------------------------------------------------------
 //   AFFICHAGE DES TICKETS
-//------------------------------------------------------
+
 function showTickets(dateStr) {
   selectedDateTxt.textContent = dateStr;
   ticketList.innerHTML = "";
@@ -172,9 +157,8 @@ function showTickets(dateStr) {
     .forEach((btn) => (btn.onclick = () => editTicket(btn.dataset.id)));
 }
 
-//------------------------------------------------------
 //   CRUD TICKETS
-//------------------------------------------------------
+
 function deleteTicket(id) {
   let tickets = loadTickets().filter((t) => String(t.id) !== String(id));
   saveTickets(tickets);
@@ -232,9 +216,8 @@ saveTicketBtn.onclick = () => {
 
 closeModalBtn.onclick = () => (ticketModal.style.display = "none");
 
-//------------------------------------------------------
 //   LOCAL STORAGE TASKS
-//------------------------------------------------------
+
 function loadTasks() {
   return JSON.parse(localStorage.getItem("tasks")) || [];
 }
@@ -243,9 +226,8 @@ function saveTasks(tasks) {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-//------------------------------------------------------
 //   AFFICHAGE DES TÂCHES
-//------------------------------------------------------
+
 function renderTasks() {
   const taskList = document.querySelector(".taches");
   taskList.innerHTML = "";
@@ -284,6 +266,11 @@ function renderTasks() {
       task.done = !task.done;
       saveTasks(tasks);
       renderTasks();
+      if (task.done) {
+        const updated = tasks.filter((t) => t.id !== task.id);
+        saveTasks(updated);
+        renderTasks();
+      }
     };
 
     li.querySelector(".editTask").onclick = () => {
@@ -307,9 +294,8 @@ function renderTasks() {
   });
 }
 
-//------------------------------------------------------
 //   AJOUT D'UNE TÂCHE
-//------------------------------------------------------
+
 addTaskButton.onclick = () => {
   taskTitle.value = "";
   formNote.style.display = "flex";
@@ -334,14 +320,10 @@ closenote.onclick = () => {
   formNote.style.display = "none";
 };
 
-//------------------------------------------------------
-//   INITIALISATION
-//------------------------------------------------------
 renderTasks();
 
-//------------------------------------------------------
 //   NAVIGATION MOIS
-//------------------------------------------------------
+
 icons.forEach((icon) => {
   icon.onclick = () => {
     currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
@@ -359,9 +341,8 @@ icons.forEach((icon) => {
   };
 });
 
-//------------------------------------------------------
 //   MODE SOMBRE
-//------------------------------------------------------
+
 if (localStorage.getItem("theme") === "dark") {
   document.body.classList.add("dark");
   toggle.checked = true;
